@@ -18,8 +18,10 @@ def check(inf):
     initial_flex = inf[1]
     flex_scale = inf[2]
     flex = abs((p.read_analog() - initial_flex) / flex_scale)
+    print(flex)
     if flex > 30:
         #print('PRESSED')
+        
         return True
         
     else:
@@ -30,6 +32,6 @@ def check(inf):
     
     
 while True:
-    for i in ["left","right","for","back"]:
+    for i in ["left"]:
         if check(pins[i]):
             print(i) 
