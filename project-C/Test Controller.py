@@ -14,7 +14,7 @@ while True:
         
     if button_b.was_pressed():
         radio.send(PREFIX + "REVERSE:2")
-        display.show(Image.ARROW_N)
+        display.show(Image.ARROW_S)
         sleep(500)
     
     display.clear()
