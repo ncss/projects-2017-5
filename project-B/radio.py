@@ -6,8 +6,12 @@ ball = [0,0]
 def draw_display(ball,paddle):
     display.clear()
     display.set_pixel(paddle,0,9)
-    if ball[1] > 4:
+    if ball[1] > 4 and ball[1] < 10:
         display.set_pixel(4-ball[0],4-((ball[1])-5),9)
+    if ball[1] == 9:
+        display.show(Image('90009:09990:00000:09090:09090'),wait=False)
+    elif ball[1] == 0:
+        display.show(Image('09990:90009:00000:09090:09090'),wait=False)
   
 while 1:
   msg = radio.receive()
