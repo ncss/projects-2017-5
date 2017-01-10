@@ -7,20 +7,24 @@ radio.config(channel=13)
 
 pos = "down"
 
+
+
 while True:
     x, y, z = accelerometer.get_values()
-    #print(z)
-    sleep(50) 
+    sleep(50)
+    
     if pos == "up":
         if -300 < z  < -50:
             pos = "down"
-            print("knee down")
             display.show(Image.SAD)
+            
     elif pos == "down":
-        if -1000 < z < -850:
+        if z < -850:
             pos = "up"
-            print("knee up")
-            display.show(Image.HAPPY)
+            #display.show(Image.ASLEEP)
+            
+                    
             music.play('C7:1')
             radio.send("right")
+            display.show(Image.HAPPY)
     
