@@ -37,6 +37,7 @@ def update_screen():
   else:
     display_range = [5,6,7,8,9]
     if ball[1] in display_range:
+        display.set_pixel(ball[0],ball[1]-5)
       
 
 
