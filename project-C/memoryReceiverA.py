@@ -8,7 +8,10 @@ receivedsequence = ''
 inputsequence = ''
 
 while True:
-    msg = radio.receive()
+    try:
+        msg = radio.receive()
+    except ValueError:
+        continue
     
     button_a.was_pressed()
     button_b.was_pressed()
@@ -20,28 +23,28 @@ while True:
             receivedsequence = msg[4:]
             display.clear()
                 
-        while len(inputsequence) < len(receivedsequence):
-            if button_a.was_pressed():
-                inputsequence += ('A')
-            
-            elif button_b.was_pressed():
-                inputsequence += ('B')
+            while len(inputsequence) < len(receivedsequence):
+                if button_a.was_pressed():
+                    inputsequence += ('A')
                 
-            if button_a.is_pressed():
-                display.show("A")
+                elif button_b.was_pressed():
+                    inputsequence += ('B')
+                    
+                if button_a.is_pressed():
+                    display.show("A")
+                    
+                elif button_b.is_pressed():
+                    display.show("B")
+                else:
+                    display.clear()
+            if inputsequence == receivedsequence:
+                radio.send("REC:CORRECT")
+                display.show(Image.YES)
+                inputsequence = ''
+                receivedsequence = ''
                 
-            elif button_b.is_pressed():
-                display.show("B")
             else:
-                display.clear()
-        if inputsequence == receivedsequence:
-            radio.send("REC:CORRECT")
-            display.show(Image.YES)
-            inputsequence = ''
-            receivedsequence = ''
-            
-        else:
-            radio.send("REC:INCORRECT")
-            display.show(Image.NO)
-            inputsequence = ''
-            receivedsequence = ''
+                radio.send("REC:INCORRECT")
+                display.show(Image.NO)
+                inputsequence = ''
+                receivedsequence = ''
