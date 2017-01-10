@@ -2,7 +2,7 @@ from microbit import *
 
 import radio
 
-radio.config(channel = 5)
+radio.config(channel = 5, address=0xffffffff)
 
 radio.on()
 
