@@ -11,12 +11,11 @@ length = 3
 correct = True
 while True:
     if button_a.was_pressed and button_b.was_pressed():
-        if correct == True:
-            sequence = ''
-            for i in range(length):
-                sequence += random.choice(pattern)
+        sequence = ''
+        for i in range(length):
+            sequence += random.choice(pattern)
         print(sequence)
-        radio.send("START:" + sequence)
+        radio.send("MEM:" + sequence)
         for char in sequence:
             display.show(char)
             sleep(1000)
@@ -25,15 +24,13 @@ while True:
         not_received = True
         while not_received:
             msg = radio.receive()
-            if msg: #and msg == 'CORRECT':
+            if msg and 'MEM:CORRECT' in msg:
                 print(msg)
-                correct = True
                 length += 1
                 not_received = False
-            elif msg != 'CORRECT':
-                correct = False
+            elif msg != 'MEM:CORRECT':
                 if button_a.was_pressed and button_b.was_pressed():
-                    radio.send("START:" + sequence)
+                    radio.send("MEM:" + sequence)
                     for char in sequence:
                         display.show(char)
                         sleep(1000)
