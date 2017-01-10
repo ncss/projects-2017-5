@@ -21,7 +21,10 @@ while True:
     msg = radio.receive()
     
     if msg and msg == 'BTN:START':
+        
         break
+button_a.was_pressed()
+button_b.was_pressed()
 while True:
     if button_a.was_pressed() and button_b.was_pressed():
         for i in range(length):
