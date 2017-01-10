@@ -4,7 +4,7 @@ import radio
 radio.on()
 radio.config(channel=5)
 
-INPUTSEQUENCE = ''
+INPUTSEQUENCE = 'AB'
 SENTSEQUENCE = ''
 
 while True:
@@ -31,5 +31,5 @@ while True:
        display.clear()
    else:
        display.show('X')
-       sleep(3000)
+       sleep(2000)
        display.clear()
