@@ -17,10 +17,10 @@ while True:
             print("knee down")
             display.show(Image.SAD)
     elif pos == "down":
-        if -1000 < z < -900:
+        if -1000 < z < -850:
             pos = "up"
             print("knee up")
             display.show(Image.HAPPY)
-            music.play(music.BA_DING, wait=False)
+            music.play('C7:1')
             radio.send("right")
     

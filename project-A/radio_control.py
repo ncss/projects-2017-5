@@ -9,11 +9,17 @@ goal = 30
 leg = 'right'
 count = 0
 
-while True:
+while count < goal:
     message = radio.receive()
     if message:
         if message == 'left' and leg == 'left':
-            
+            count += 1
+            leg = 'right'
+        elif message == 'right' and leg == 'right':
+            count += 1
+            leg = 'left'
+        print(count)
+        
             
             
             
