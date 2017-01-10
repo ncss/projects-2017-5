@@ -4,7 +4,7 @@ import radio
 radio.on()
 radio.config(channel = 5)
 
-PREFIX = "ROVER:"
+PREFIX = "ROV:"
 
 def forward(time):
     pin16.write_digital(1)
@@ -13,8 +13,23 @@ def forward(time):
     pin12.write_digital(1)
     pin8.write_digital(0)
     
-    sleep(1000 * time)
+    current_time = running_time()
+    while (running_time() - current_time) / 1000 < time:
+        check_finish_line()
+        
+    stop()
     
+def forward_regard(time):
+    pin16.write_digital(1)
+    pin0.write_digital(0)
+    
+    pin12.write_digital(1)
+    pin8.write_digital(0)
+    
+    current_time = running_time()
+    while (running_time() - current_time) / 1000 < time:
+        v = 1
+        
     stop()
     
 def reverse(time):
@@ -24,8 +39,10 @@ def reverse(time):
     pin12.write_digital(0)
     pin8.write_digital(1)
     
-    sleep(1000 * time)
-    
+    current_time = running_time()
+    while (running_time() - current_time) / 1000 < time:
+        check_start_line()
+        
     stop()
     
 def stop():
@@ -34,14 +51,20 @@ def stop():
     
     pin12.write_digital(0)
     pin8.write_digital(0)
-
+    
+def check_finish_line():
+    a = pin1.read_analog()
+    if a < 300:
+        stop()
+        
+        
+def check_start_line():
+    a = pin1.read_analog()
+    if a < 300:
+        stop()
+        forward_regard(0.5)
 
 while True:
-    if pin1.read_analog() < 300:
-        print("ONLINE")
-    elif pin1.read_analog() > 400:
-        print("OFFLINE")
-    
     msg = radio.receive()
     if msg:
         if msg.startswith(PREFIX):
