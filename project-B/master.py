@@ -8,8 +8,7 @@ radio.config(channel = 2)
 
 ticks=0
 
-ball = [random.choice([0,1,2,4,5]),3]
-print(ball)
+ball = [random.randrange(5),3]
 velocity = [1,1]
  
 walls_x = [-1,5]
@@ -17,6 +16,16 @@ walls_y = [0,9]
 
 paddle_1 = 2 #Paddle 1 is master paddle
 paddle_2 = 2
+
+def reset_game():
+    global ticks,ball,velocity,paddle_1,paddle_2
+    ticks=0
+
+    ball = [random.randrange(5),3]
+    velocity = [1,1]
+     
+    paddle_1 = 2 #Paddle 1 is master paddle
+    paddle_2 = 2
 
 def move_ball(): 
     #print(1,ball)
@@ -60,14 +69,21 @@ def update_screen():
 
 def end_game(winner):
     if winner == '1':
-        display.show(Image('90009:09990:00000:09090:09090'),loop=True)
+        display.show(Image('90009:09990:00000:09090:09090'))
     elif winner == '0':
-        display.show(Image('09990:90009:00000:09090:09090'),loop=True)
+        display.show(Image('09990:90009:00000:09090:09090'))
+    
+    sleep(1000)
+    while 1:
+        if button_a.is_pressed() or button_b.is_pressed():
+            reset_game()
+            break
   
 while 1: 
     #print(1.5*(math.log(ticks+1)))
-    if ticks % int(30-(math.log(ticks+1)/1.75))  == 0:
+    if ticks % int(30 - ticks*15/3000) == 0:
         move_ball()
+        print(str(int(30 - ticks*15/3000)))
        
     update_screen()
     radio.send("US:" + str(ball[0]) + ":" + str(ball[1]) + ":" + str(paddle_2))#add paddle
@@ -79,8 +95,11 @@ while 1:
     
     if button_a.was_pressed():
         paddle_1 = shift_paddle(paddle_1, -1)
+        
     if button_b.was_pressed():
         paddle_1 = shift_paddle(paddle_1, 1)
+    
+    
     
     b = radio.receive()
     if b:
