@@ -24,13 +24,10 @@ state = STATE_START
 
 leg_hold_start = 0
 current_delay = 1
-successful_raises = 0
 
 while True:    
     if state == STATE_START:
-        if successful_raises == 15:
-            state = STATE_FINISHED
-        elif is_leg_up():
+        if is_leg_up():
             state = STATE_WAIT_FOR_HOLD
             leg_hold_start = running_time()
             continue
@@ -48,6 +45,3 @@ while True:
             state = STATE_START
             radio.send('right')
             current_delay += 0.5
-        
-    elif state == STATE_FINISHED:
-        continue
