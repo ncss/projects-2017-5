@@ -52,3 +52,4 @@ while True:
             radio.send('right')
             current_delay += 500
             display.show(Image.SAD)
+            sleep(100)
