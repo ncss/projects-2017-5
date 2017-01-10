@@ -9,7 +9,7 @@ combo = 0
 radio.on()
 radio.config(channel=9)
 
-
+# d
 
 def round(time, combo, multiplier,score):
     directions = {"right": Image.ARROW_E,
