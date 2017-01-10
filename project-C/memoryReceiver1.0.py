@@ -36,14 +36,12 @@ while True:
                 display.clear()
         if inputsequence == receivedsequence:
             radio.send("REC:CORRECT")
-            radio.send("REC:FORWARD")
             display.show(Image.YES)
             inputsequence = ''
             receivedsequence = ''
             
         else:
             radio.send("REC:INCORRECT")
-            radio.send("REC:REVERSE")
             display.show(Image.NO)
             inputsequence = ''
             receivedsequence = ''
