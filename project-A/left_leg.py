@@ -38,7 +38,8 @@ while True:
     elif state == STATE_WAIT_FOR_HOLD:
         if is_leg_down():
             state = STATE_START
-            music.play(music.WAWAWAWAA)
+            music.play(music.WAWAWAWAA, wait=False)
+            display.show(Image.SAD)
             continue
         elif running_time() - leg_hold_start >= current_delay:
             state = STATE_HOLD_LONG_ENOUGH
