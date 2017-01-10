@@ -26,7 +26,7 @@ while 1:
     else:
         display.clear()
     if button_a.was_pressed():
-        radio.send('MP:2:l')
-    elif button_b.was_pressed():
         radio.send('MP:2:r')
+    elif button_b.was_pressed():
+        radio.send('MP:2:l')
       
