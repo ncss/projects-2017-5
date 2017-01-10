@@ -1,0 +1,5 @@
+Radical Robot Remembering Race
+
+- Two player
+- Start and Finish Buttons
+- Scoreboard
