@@ -1,7 +1,7 @@
 from microbit import *
 import radio
 
-PREFIX = "ROVER:"
+PREFIX = "ROV:"
 
 radio.on()
 radio.config(channel=5)
