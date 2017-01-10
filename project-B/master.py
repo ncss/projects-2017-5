@@ -1,12 +1,14 @@
 from microbit import *
 import radio
+import random
+import math
 
 radio.on()
 radio.config(channel = 2)
 
 ticks=0
 
-ball = [1,2]
+ball = [0,3]
 velocity = [1,1]
  
 walls_x = [-1,5]
@@ -16,17 +18,24 @@ paddle_1 = 2 #Paddle 1 is master paddle
 paddle_2 = 2
 
 def move_ball(): 
+    #print(1,ball)
     if ball[0] + velocity[0] in walls_x: #Needs to take into account paddle 
         velocity[0] = -velocity[0]
+    #print(ball,velocity,paddle_1,paddle_2,ball[1] + velocity[1],ball[1] + velocity[1],abs(4-paddle_2))
+    #print('v1',velocity)
     if ball[0] == paddle_1:
         if ball[1] + velocity[1] == 0:
-            velocity[1] = -velocity[1]
-    elif ball[0] == 4-paddle_2: 
-        if ball[1] + velocity[1] == 9:    
-            velocity[1] = -velocity[1]
+            velocity[1] *= -1
     
+    elif ball[0] == abs(4-paddle_2): 
+        if ball[1] + velocity[1] == 9:
+            #print('yes?')    
+            velocity[1] *= -1
+    #print('v2',velocity)
+    #print(2,ball)
     ball[0] += velocity[0]
-    ball[1] += velocity[1] 
+    ball[1] += velocity[1]
+    #print(3,ball)
     """
     if ball[0] + velocity[0] in walls_x: #Needs to take into account paddle 
         velocity[0] = -velocity[0] 
@@ -73,12 +82,13 @@ def end_game(winner):
         display.show(Image('09990:90009:00000:09090:09090'),loop=True)
   
 while 1: 
-    if ticks % 30 == 0:
+    print(1.5*(math.log(ticks+1)))
+    if ticks % int(30-(math.log(ticks+1)/1.75))  == 0:
         move_ball()
        
     update_screen()
     radio.send("US:" + str(ball[0]) + ":" + str(ball[1]) + ":" + str(paddle_2))#add paddle
-    
+    #print(4,ball)
     if ball[1] == 0:
         end_game('1')
     if ball[1] == 9:
@@ -93,10 +103,17 @@ while 1:
     if b:
         b = b.split(":")
         if b[0] == "MP":
-            if b[2] == "r":
-                paddle_2 = shift_paddle(paddle_2, 1)
-            if b[2] == "l":
-                paddle_2 = shift_paddle(paddle_2, -1)
+            if b[1] == '1':
+                if b[2] == "r":
+                    paddle_1 = shift_paddle(paddle_1, -1)
+                if b[2] == "l":
+                    paddle_1 = shift_paddle(paddle_1, 1)
+
+            elif b[1] == '2':
+                if b[2] == "r":
+                    paddle_2 = shift_paddle(paddle_2, -1)
+                if b[2] == "l":
+                    paddle_2 = shift_paddle(paddle_2, 1)
     sleep(10)
     ticks += 1
     
