@@ -2,9 +2,11 @@ from microbit import *
 import radio
 
 radio.on()
-radio.config(channel = 5)
+radio.config(channel = 5, address=0xffffffff, power=7)
 
-PREFIX = "ROV:"
+REC = "REC:"
+MEM = "MEM:"
+ROV = "ROV:"
 
 def forward(time):
     pin16.write_digital(1)
@@ -57,7 +59,6 @@ def check_finish_line():
     if a < 300:
         stop()
         
-        
 def check_start_line():
     a = pin1.read_analog()
     if a < 300:
@@ -67,12 +68,10 @@ def check_start_line():
 while True:
     msg = radio.receive()
     if msg:
-        if msg.startswith(PREFIX):
-            msg = msg[len(PREFIX):]
-            if msg.startswith("FORWARD:"):
-                msg = msg[len("FORWARD:"):]
-                forward(int(msg))
+        if msg.startswith(REC):
+            msg = msg[len(REC):]
+            if msg.startswith("CORRECT"):
+                forward(2)
                 
-            if msg.startswith("REVERSE:"):
-                msg = msg[len("REVERSE:"):]
-                reverse(int(msg))
+            if msg.startswith("INCORRECT"):
+                reverse(2)
