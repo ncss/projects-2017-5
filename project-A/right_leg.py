@@ -42,7 +42,6 @@ while True:
             continue
         elif running_time() - leg_hold_start >= current_delay:
             state = STATE_HOLD_LONG_ENOUGH
-            successful_raises += 1
             display.show(Image.HAPPY)
             music.play('C7:1')
             
