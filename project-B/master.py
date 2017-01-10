@@ -45,9 +45,27 @@ def update_screen():
   
 while 1: 
     move_ball()
-    radio.send("US:" + str(ball[0]) + ":" + str(ball[1]))#add paddle
+    radio.send("US:" + str(ball[0]) + ":" + str(ball[1]) + ":" + str(paddle_2))#add paddle
     update_screen()
-    sleep(300)  
-    display.clear() 
+     
+    
+    display.set_pixel(paddle_1,0,9)
+    
+    if button_a.was_pressed:
+        shift_paddle(paddle_1, -1)
+    if button_b.was_pressed:
+        shift_paddle(paddle_1, 1)
+    
+    b = radio.receive()
+    if b:
+        b = b.split()
+        if b[0] == "MP":
+            if b[2] == "r":
+                shift_paddle(paddle_2, -1)
+            if b[2] == "l":
+                shift_paddle(paddle_2, 1)
+    sleep(300)
+    display.clear()
+    
     
     
