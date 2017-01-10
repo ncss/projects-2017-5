@@ -18,44 +18,36 @@ def is_leg_down():
 STATE_START = 0
 STATE_WAIT_FOR_HOLD = 1
 STATE_HOLD_LONG_ENOUGH = 2
-STATE_SUCCESSFUL_LEG_RAISE = 3
-STATE_FINISHED = 4
+STATE_FINISHED = 3
 
 state = STATE_START
 
+leg_hold_start = 0
+current_delay = 1
+successful_raises = 0
+
 while True:    
     if state == STATE_START:
-        if is_leg_up():
+        if successful_raises == 30:
+            state = STATE_FINISHED
+        elif is_leg_up():
             state = STATE_WAIT_FOR_HOLD
+            leg_hold_start = running_time()
             continue
+            
     elif state == STATE_WAIT_FOR_HOLD:
-        
         if is_leg_down():
             state = STATE_START
             continue
-        elif 
+        elif running_time() - leg_hold_start >= current_delay:
+            state = STATE_HOLD_LONG_ENOUGH
+            successful_raises += 1
+            
     elif state == STATE_HOLD_LONG_ENOUGH:
-        continue
-    elif state == STATE_SUCCESSFUL_LEG_RAISE:
-        continue
+        if is_leg_down():
+            state = STATE_START
+            radio.send('right')
+            current_delay += 0.5
+        
     elif state == STATE_FINISHED:
         continue
-    
-    x, y, z = accelerometer.get_values()
-    sleep(50)
-    
-    if pos == "up":
-        if -300 < z  < -50:
-            pos = "down"
-            display.show(Image.SAD)
-            
-    elif pos == "down":
-        if z < -850:
-            pos = "up"
-            #display.show(Image.ASLEEP)
-            
-                    
-            music.play('C7:1')
-            radio.send("right")
-            display.show(Image.HAPPY)
-    
