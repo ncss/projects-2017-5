@@ -30,6 +30,8 @@ while True:
  
     msg = radio.receive()
     if msg:
+        radio.on()
+        
         if msg == 'REC:CORRECT':
             print(msg)
             length += 1
