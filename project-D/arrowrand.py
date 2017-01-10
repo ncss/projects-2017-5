@@ -1,7 +1,7 @@
 from microbit import *
 import radio
 import random
-time = 1200
+time = 2400
 score = 0
 multiplier = 0
 combo = 0
@@ -9,13 +9,12 @@ combo = 0
 radio.on()
 radio.config(channel=9)
 
-# d
 
 def round(time, combo, multiplier,score):
     directions = {"right": Image.ARROW_E,
-               "for": Image.ARROW_N,
-               "back":Image.ARROW_S,
-               "left":Image.ARROW_W}
+                  "for": Image.ARROW_N,
+                  "back":Image.ARROW_S,
+                  "left":Image.ARROW_W}
     direction  = ["right","left","for","back"]
     game_won = False
     cur = random.choice(direction)
@@ -23,16 +22,18 @@ def round(time, combo, multiplier,score):
     start =  running_time()
     end = running_time()
     
+    
     while end-start < time:
         get = radio.receive()
-        if get == cur:
-            game_won = True
-            combo += 1
-            break
+        if type(get) is str:
+            if get == cur:
+                game_won = True
+                combo += 1
+                break
         end = running_time()
     
-    if time > 400:
-        time = int(time* 0.9)
+    #if time > 400:
+     #   time = int(time* 0.95)
     if combo >= 3:
         multiplier += 1
         combo = 0
@@ -42,6 +43,7 @@ def round(time, combo, multiplier,score):
         multiplier = 1
         combo = 0
     return time,combo,multiplier,score
+    
 
 
 while True:
@@ -51,10 +53,13 @@ while True:
             time,combo,multiplier,score = round(time,combo,multiplier,score)
             display.clear()
             print(score)
-        display.scroll(score,wait=False)
+            if button_b.was_pressed():
+                s_end = s_start + 200000
+        display.scroll(str(score),wait=True)
         display.show(Image.HEART)
-        wait(2000)
+        sleep(2000)
         display.show(Image.MUSIC_CROTCHET)
+        s_end = running_time()
     display.show(Image.MUSIC_QUAVER)
             
     
