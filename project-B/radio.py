@@ -5,7 +5,7 @@ radio.config(channel=2)
 ball = [0,0]
 def draw_display(ball,paddle):
     display.clear()
-    #display.set_pixel(paddle,4,9)
+    display.set_pixel(paddle,0,9)
     display.set_pixel(ball[0],ball[1],9)
   
 while 1:
@@ -16,9 +16,13 @@ while 1:
     if msg[0] == 'US':
         ball[0] = int(msg[1])
         ball[1] = int(msg[2])
+        paddle = int(msg[3])
     if ball[1] > 4:
-        draw_display([ball[0],-1*(5-ball[1])],1)
+        draw_display([4-ball[0],4-((ball[1])-5)],paddle)
     else:
         display.clear()
-    print(ball)
+    if button_a.was_pressed():
+        radio.send('MP:2:l')
+    elif button_b.was_pressed():
+        radio.send('MP:2:r')
       
