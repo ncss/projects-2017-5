@@ -18,7 +18,7 @@ m = radio.receive()
 if m:
     if "TIME:Restart" in m:
         #Resend message
-        send_time(5) #Change this value
+        send_time(5000) #Change this value(Also make value in miliseconds)
         
 #------------------------------------------------------
 
