@@ -10,7 +10,7 @@ radio.config(channel = 5)
 length = 3
 correct = True
 while True:
-    if button_a.was_pressed and button_b.was_pressed():
+    if button_a.was_pressed() and button_b.was_pressed():
         sequence = ''
         for i in range(length):
             sequence += random.choice(pattern)

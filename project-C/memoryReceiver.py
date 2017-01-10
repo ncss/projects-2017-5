@@ -17,12 +17,15 @@ while True:
    while len(INPUTSEQUENCE) < len(SENTSEQUENCE):
        if button_a.was_pressed():
            INPUTSEQUENCE += 'A'
+           display.show("A")
        elif button_b.was_pressed():
            INPUTSEQUENCE += 'B'
+           display.show("B")
    
    if INPUTSEQUENCE == SENTSEQUENCE:
        radio.send('MEM:CORRECT')
-       display.clear()
+       #radio.send(ROVER:FORWARD)
+       #radio.send(ROVER:REVERSE)
        display.show(Image.HEART)
        sleep(500)
        display.clear()
