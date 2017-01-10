@@ -2,6 +2,8 @@ from microbit import *
 
 import radio
 
+radio.config(channel = 5)
+
 radio.on()
 
 start = False
@@ -12,7 +14,7 @@ while True:
     if pin0.read_digital():
         if start == False:
             start = True
-            radio.send("BTN:Start")
+            radio.send("BTN:START")
             display.show(Image.HEART)
     else:
         if start == True:
@@ -21,6 +23,6 @@ while True:
     msg = radio.receive()
     
     if msg:
-        if "Finish" in msg:
+        if "FINISH" in msg:
             start = False
             display.show(Image.TARGET)
