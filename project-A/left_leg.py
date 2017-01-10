@@ -7,16 +7,47 @@ radio.config(channel=13)
 
 pos = "down"
 
-while True:
-    x, y, z = accelerometer.get_values()
-    sleep(50) 
-    if pos == "up":
-        if -300 < z  < -50:
-            pos = "down"
-            display.show(Image.SAD)
-    elif pos == "down":
-        if z < -850:
-            pos = "up"
-            display.show(Image.HAPPY)
-            music.play('E7:1')
-            radio.send("left")
+def is_leg_up():
+    z = accelerometer.get_z()
+    return z < -850
+
+def is_leg_down():
+    z = accelerometer.get_z()
+    return -300 < z  < -50    
+
+STATE_START = 0
+STATE_WAIT_FOR_HOLD = 1
+STATE_HOLD_LONG_ENOUGH = 2
+STATE_FINISHED = 3
+
+state = STATE_START
+
+leg_hold_start = 0
+current_delay = 1
+successful_raises = 0
+
+while True:    
+    if state == STATE_START:
+        if successful_raises == 15:
+            state = STATE_FINISHED
+        elif is_leg_up():
+            state = STATE_WAIT_FOR_HOLD
+            leg_hold_start = running_time()
+            continue
+            
+    elif state == STATE_WAIT_FOR_HOLD:
+        if is_leg_down():
+            state = STATE_START
+            continue
+        elif running_time() - leg_hold_start >= current_delay:
+            state = STATE_HOLD_LONG_ENOUGH
+            successful_raises += 1
+            
+    elif state == STATE_HOLD_LONG_ENOUGH:
+        if is_leg_down():
+            state = STATE_START
+            radio.send('left')
+            current_delay += 0.5
+        
+    elif state == STATE_FINISHED:
+        continue

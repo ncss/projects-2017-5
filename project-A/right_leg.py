@@ -28,7 +28,7 @@ successful_raises = 0
 
 while True:    
     if state == STATE_START:
-        if successful_raises == 30:
+        if successful_raises == 15:
             state = STATE_FINISHED
         elif is_leg_up():
             state = STATE_WAIT_FOR_HOLD
