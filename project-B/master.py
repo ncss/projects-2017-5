@@ -8,7 +8,7 @@ ball = [1,2]
 velocity = [1,1]
  
 walls_x = [-1,5]
-walls_y = [-1,11]
+walls_y = [-1,10]
 
 paddle_1 = 2 #Paddle 1 is master paddle
 paddle_2 = 2
@@ -33,20 +33,21 @@ def update_screen():
   if current_screen == 1:
     display_range = [0,1,2,3,4]
     if ball[1] in display_range:
-      display.set_pixel(ball[0],ball[1])
+      display.set_pixel(ball[0],ball[1], 9)
   else:
     display_range = [5,6,7,8,9]
     if ball[1] in display_range:
-        display.set_pixel(ball[0],ball[1]-5)
+        display.set_pixel(ball[0],ball[1]-5, 9 )
       
 
 
 
   
-while 1:
-    display.clear()  
-    sleep(300)
+while 1: 
+    move_ball()
+    radio.send("US:" + str(ball[0]) + ":" + str(ball[1]))#add paddle
+    update_screen()
+    sleep(300)  
+    display.clear() 
     
     
-    
-    draw_display(paddle1,paddle2,ball)
