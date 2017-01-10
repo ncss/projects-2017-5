@@ -3,3 +3,5 @@ Radical Robot Remembering Race
 - Two player
 - Start and Finish Buttons
 - Scoreboard & Timer
+- Better speaker
+- Sign, flashing leds?
