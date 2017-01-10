@@ -3,7 +3,7 @@ import radio
 import random
 
 radio.on()
-radio.config(channel = 5, address=0xffffffff)
+radio.config(channel = 5, address=0xffffffff, power=7)
 
 letters = ['A','B']
 pattern = ''
@@ -16,6 +16,8 @@ def display_sequence(sequence):
         display.clear()
         sleep(500)
 
+not_recieved = False
+
 while True:
     if button_a.was_pressed() and button_b.was_pressed():
         for i in range(length):
@@ -23,28 +25,28 @@ while True:
         print(pattern)
         radio.send('MEM:' + pattern)
         display_sequence(pattern)
-        correct = False
-            
+        not_recieved = True    
             
  
- 
-    msg = radio.receive()
-    if msg:
-        radio.on()
-        
-        if msg == 'REC:CORRECT':
-            print(msg)
-            length += 1
-            pattern = ''
-        elif msg == 'REC:INCORRECT':
-            incorrect = True
-            print(msg)
-            while incorrect:
-                if button_a.was_pressed() and button_b.was_pressed():
-                    print(pattern)
-                    radio.send('MEM:' + pattern)   
-                    display_sequence(pattern)
-                    incorrect = False
+    while not_recieved:    
+        msg = radio.receive()
+        if msg:
+            radio.on()
+            
+            if msg == 'REC:CORRECT':
+                print(msg)
+                length += 1
+                pattern = ''
+                not_recieved = False
+            elif msg == 'REC:INCORRECT':
+                incorrect = True
+                print(msg)
+                while incorrect:
+                    if button_a.was_pressed() and button_b.was_pressed():
+                        print(pattern)
+                        radio.send('MEM:' + pattern)   
+                        display_sequence(pattern)
+                        incorrect = False
                     
             
             
