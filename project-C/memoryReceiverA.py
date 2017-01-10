@@ -9,11 +9,6 @@ inputsequence = ''
 
 while True:
     msg = radio.receive()
-    if msg and msg == "BTN:START":
-        break
-    
-while True:
-    msg = radio.receive()
     
     button_a.was_pressed()
     button_b.was_pressed()
