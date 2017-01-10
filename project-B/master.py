@@ -28,7 +28,7 @@ def move_ball():
         if ball[1] + velocity[1] == 0:
             velocity[1] *= -1
     
-    elif ball[0] == abs(4-paddle_2): 
+    if ball[0] == abs(4-paddle_2): 
         if ball[1] + velocity[1] == 9:
             #print('yes?')    
             velocity[1] *= -1
@@ -36,25 +36,7 @@ def move_ball():
     #print(2,ball)
     ball[0] += velocity[0]
     ball[1] += velocity[1]
-    #print(3,ball)
-    """
-    if ball[0] + velocity[0] in walls_x: #Needs to take into account paddle 
-        velocity[0] = -velocity[0] 
-    ball[0] += velocity[0] 
-    
-    
-    if ball[1] + velocity[1] in walls_y:
-        print(paddle_1)
-        print(paddle_2)
-        print(ball[0])
-    
-    if ball[1] + velocity[1] == 0 and paddle_1 == 4-ball[0]: 
-        velocity[1] = -velocity[1]  
-    elif ball[1] + velocity[1] == 9 and paddle_2 == 4-ball[0]: 
-        velocity[1] = -velocity[1] 
-    ball[1] += velocity[1] 
-
-    """
+   
 def shift_paddle(paddle, direction):
     if paddle + direction not in walls_x:
       paddle += direction
