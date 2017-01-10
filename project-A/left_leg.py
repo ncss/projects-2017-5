@@ -23,7 +23,7 @@ STATE_FINISHED = 3
 state = STATE_START
 
 leg_hold_start = 0
-current_delay = 1
+current_delay = 1000
 
 display.show(Image.SAD)
 
@@ -49,5 +49,5 @@ while True:
         if is_leg_down():
             state = STATE_START
             radio.send('left')
-            current_delay += 0.5
+            current_delay += 500
             display.show(Image.SAD)
