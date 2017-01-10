@@ -8,7 +8,8 @@ radio.config(channel = 2)
 
 ticks=0
 
-ball = [0,3]
+ball = [random.choice([0,1,2,4,5]),3]
+print(ball)
 velocity = [1,1]
  
 walls_x = [-1,5]
@@ -82,7 +83,7 @@ def end_game(winner):
         display.show(Image('09990:90009:00000:09090:09090'),loop=True)
   
 while 1: 
-    print(1.5*(math.log(ticks+1)))
+    #print(1.5*(math.log(ticks+1)))
     if ticks % int(30-(math.log(ticks+1)/1.75))  == 0:
         move_ball()
        
