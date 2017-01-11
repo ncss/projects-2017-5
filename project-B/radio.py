@@ -16,7 +16,7 @@ def draw_display(ball,paddle):
 while 1:
     try:
         msg = radio.receive()
-    catch ValueError:
+    except ValueError:
         continue
     if msg:
         msg = msg.split(':')
