@@ -3,19 +3,23 @@ from radio import *
 on()
 config(channel = 2)
 NUM = '2'
-EXTREME = 700
+EXTREME = 1000
 STILL = 400
 a = accelerometer
 state = 's'
-display.show(Image())
+display.show(NUM)
+zero = a.get_x()
 while 1:
-    if abs(a.get_x()) <= STILL:
+    x_tilt = a.get_x() - zero
+    if button_a.is_pressed() and button_b.is_pressed():
+        zero = a.get_x()
+    if abs(x_tilt) <= STILL:
         state = 's'
-    if a.get_x() >= EXTREME:
+    if x_tilt >= EXTREME:
         if state == 's':
             send("MP:"+NUM+":l")
         state = 'l'
-    if a.get_x() <= -EXTREME:
+    if x_tilt <= -EXTREME:
         if state == 's':
             send("MP:"+NUM+":r")
         state = 'r'

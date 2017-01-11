@@ -23,31 +23,33 @@ STATE_FINISHED = 3
 state = STATE_START
 
 leg_hold_start = 0
-current_delay = 1
-successful_raises = 0
+current_delay = 1000
+
+display.show(Image.SAD)
 
 while True:    
     if state == STATE_START:
-        if successful_raises == 30:
-            state = STATE_FINISHED
-        elif is_leg_up():
+        if is_leg_up():
             state = STATE_WAIT_FOR_HOLD
             leg_hold_start = running_time()
+            display.show(Image.ASLEEP)
             continue
             
     elif state == STATE_WAIT_FOR_HOLD:
         if is_leg_down():
             state = STATE_START
+            music.play(music.WAWAWAWAA, wait=False)
+            display.show(Image.SAD)
             continue
         elif running_time() - leg_hold_start >= current_delay:
             state = STATE_HOLD_LONG_ENOUGH
-            successful_raises += 1
+            display.show(Image.HAPPY)
+            music.play('C7:1')
             
     elif state == STATE_HOLD_LONG_ENOUGH:
         if is_leg_down():
             state = STATE_START
             radio.send('right')
-            current_delay += 0.5
-        
-    elif state == STATE_FINISHED:
-        continue
+            current_delay += 500
+            display.show(Image.SAD)
+            sleep(100)

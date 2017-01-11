@@ -3,7 +3,7 @@ import radio
 import random
 
 radio.on()
-radio.config(channel = 5, address=0xffffffff, power=7)
+radio.config(channel = 5, address=0xfffffff1, power=7)
 
 letters = ['A','B']
 pattern = ''
@@ -17,7 +17,14 @@ def display_sequence(sequence):
         sleep(500)
 
 not_recieved = False
-
+"""while True:
+    msg = radio.receive()
+    
+    if msg and msg == 'BTN:START':
+        
+        break"""
+button_a.was_pressed()
+button_b.was_pressed()
 while True:
     if button_a.was_pressed() and button_b.was_pressed():
         for i in range(length):

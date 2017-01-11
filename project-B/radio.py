@@ -16,13 +16,17 @@ def draw_display(ball,paddle):
 while 1:
   msg = radio.receive()
   if msg:
-    print(msg)
     msg = msg.split(':')
     if msg[0] == 'US':
         ball[0] = int(msg[1])
         ball[1] = int(msg[2])
         paddle = int(msg[3])
         draw_display(ball,paddle)
+<<<<<<< HEAD
+=======
+    #else:
+        #display.clear()
+>>>>>>> origin/master
     if button_a.was_pressed():
         radio.send('MP:2:r')
     elif button_b.was_pressed():

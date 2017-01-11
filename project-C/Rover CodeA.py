@@ -8,6 +8,8 @@ REC = "REC:"
 MEM = "MEM:"
 ROV = "ROV:"
 
+speed = 1
+
 def forward(time):
     pin16.write_digital(1)
     pin0.write_digital(0)
@@ -48,16 +50,17 @@ def reverse(time):
     stop()
     
 def stop():
-    pin16.write_digital(0)
-    pin0.write_digital(0)
-    
     pin12.write_digital(0)
     pin8.write_digital(0)
+    
+    pin16.write_digital(0)
+    pin0.write_digital(0)
     
 def check_finish_line():
     a = pin1.read_analog()
     if a < 300:
         stop()
+        radio.send("ROV:FINISH")
         
 def check_start_line():
     a = pin1.read_analog()
@@ -71,7 +74,7 @@ while True:
         if msg.startswith(REC):
             msg = msg[len(REC):]
             if msg.startswith("CORRECT"):
-                forward(2)
+                forward(speed)
                 
             if msg.startswith("INCORRECT"):
-                reverse(2)
+                reverse(speed)
