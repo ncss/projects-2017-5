@@ -45,6 +45,10 @@ while True:
             state = STATE_HOLD_LONG_ENOUGH
             display.show(Image.HAPPY)
             music.play('C7:1')
+        #elif message:
+            #print('received {}'.format(message))
+            #if message == 'finished':
+                #music.play(music.ENTERTAINER)
             
     elif state == STATE_HOLD_LONG_ENOUGH:
         if is_leg_down():
