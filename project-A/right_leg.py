@@ -57,3 +57,11 @@ while True:
             current_delay += 500
             display.show(Image.SAD)
             sleep(1000)
+
+    if pos == 'down' and is_leg_up():
+        pos = 'up'
+        radio.send('o')
+
+    if pos == 'up' and is_leg_down():
+        pos == 'down'
+        radio.send('p')
