@@ -6,37 +6,38 @@ import math
 radio.on()
 radio.config(channel = 2)
 
-ticks=0
-
-ball = [random.randrange(5),3]
-velocity = [1,1]
- 
 walls_x = [-1,5]
 walls_y = [0,9]
 
-paddle_1 = 2 #Paddle 1 is master paddle
-paddle_2 = 2
-
 def reset_game():
-    global ticks,ball,velocity,paddle_1,paddle_2
+    global ticks,last_hit,ball,velocity,paddle_1,paddle_2,hits
     ticks=0
+    last_hit = 0
 
     ball = [random.randrange(5),3]
     velocity = [1,1]
      
     paddle_1 = 2 #Paddle 1 is master paddle
     paddle_2 = 2
+    hits = 0
+
+reset_game()
 
 def move_ball(): 
+    global hits, last_hit
     if ball[0] + velocity[0] in walls_x:
         velocity[0] = -velocity[0]
     if ball[0] == paddle_1:
         if ball[1] + velocity[1] == 0:
             velocity[1] *= -1
+            hits += 1
+            last_hit = ticks
     
     if ball[0] == abs(4-paddle_2): 
         if ball[1] + velocity[1] == 9:
             velocity[1] *= -1
+            hits += 1
+            last_hit = ticks
     ball[0] += velocity[0]
     ball[1] += velocity[1]
    
@@ -76,9 +77,8 @@ def end_game(winner):
             break
   
 while 1: 
-    if ticks % int(30 - ticks*15/3000) == 0:
+    if (ticks - last_hit) % max(10, 30 - hits) == 0:
         move_ball()
-        print(str(int(30 - ticks*15/3000)))
        
     update_screen()
     radio.send("US:" + str(ball[0]) + ":" + str(ball[1]) + ":" + str(paddle_2))#add paddle
