@@ -28,21 +28,15 @@ def reset_game():
     paddle_2 = 2
 
 def move_ball(): 
-    #print(1,ball)
-    if ball[0] + velocity[0] in walls_x: #Needs to take into account paddle 
+    if ball[0] + velocity[0] in walls_x:
         velocity[0] = -velocity[0]
-    #print(ball,velocity,paddle_1,paddle_2,ball[1] + velocity[1],ball[1] + velocity[1],abs(4-paddle_2))
-    #print('v1',velocity)
     if ball[0] == paddle_1:
         if ball[1] + velocity[1] == 0:
             velocity[1] *= -1
     
     if ball[0] == abs(4-paddle_2): 
         if ball[1] + velocity[1] == 9:
-            #print('yes?')    
             velocity[1] *= -1
-    #print('v2',velocity)
-    #print(2,ball)
     ball[0] += velocity[0]
     ball[1] += velocity[1]
    
@@ -55,7 +49,6 @@ current_screen = 1
       
 def update_screen():
   display.clear()
-  #radio.send("US:" + ball[0] + ":" + ball[1])#add paddle
   display.set_pixel(paddle_1,0,9)
   if current_screen == 1:
     display_range = [0,1,2,3,4]
@@ -83,7 +76,6 @@ def end_game(winner):
             break
   
 while 1: 
-    #print(1.5*(math.log(ticks+1)))
     if ticks % int(30 - ticks*15/3000) == 0:
         move_ball()
         print(str(int(30 - ticks*15/3000)))

@@ -23,8 +23,6 @@ while 1:
         ball[1] = int(msg[2])
         paddle = int(msg[3])
         draw_display(ball,paddle)
-    else:
-        #display.clear()
     if button_a.was_pressed():
         radio.send('MP:2:r')
     elif button_b.was_pressed():

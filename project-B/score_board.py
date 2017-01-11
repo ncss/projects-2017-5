@@ -46,7 +46,6 @@ while True:
     if b:
         b = b.split(":")
         if b[0] == "W" and b[1] == "1":
-            print(b)
             score_1 += 1
             display_score_1()
             sleep(500)
