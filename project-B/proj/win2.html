@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Score!</title>
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    	<link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,700">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script>
+            
+            $(document).ready(function(){
+                var score_1 = "0"
+                var score_2 = "0"
+                        
+                    $.ajax({
+                        type:    "GET",
+                        url:     "/update.php?new_score=0",
+                        success: function(text) {
+                            score_1 = text;
+                        },
+                        error:   function() {
+                            // An error occurred
+                            score_1 = "0";
+                        }
+                    });
+                    
+                    $.ajax({
+                        type:    "GET",
+                        url:     "/update_2.php?new_score=0",
+                        success: function(text) {
+                            score_2 = text;
+                        },
+                        error:   function() {
+                            score_2 = "0";
+                        }
+                    });
+                    
+                    
+                        $('.score_1').text(score_1); //update text
+                        $('.score_2').text(score_2);
+                
+                
+                
+        
+                
+                    });
+
+                             
+
+            
+        </script>
+</head>
+    
+    <body>
+        <a href="http://aetech.net.au" style="position: fixed; left: 10px; top: 10px;">Reset</a>
+        <div>
+            <span class="big">Player 2 Wins!</span>
+        </div>
+
+    </body>
+
+</html>

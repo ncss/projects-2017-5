@@ -1,0 +1,48 @@
+div {
+    text-align: center;
+}
+
+.heading {
+    font-size: 1rem;
+}
+
+span {
+    padding: 2rem;
+}
+
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    background-color: #FA9F42;
+    color: white;
+    font-size: 2rem;
+    font-family: Roboto;
+    transition: background 3s;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+
+}
+
+@media only screen and (max-width: 600px) {
+    body,
+    html {
+        font-size: 1.5rem;
+    }
+    input.submit {
+        display: block;
+        margin: auto;
+        margin-top: .5rem;
+    }
+    input.addition {
+        margin-top: 0.5rem;
+    }
+}
+
+.big {
+    font-size: 3.5rem;
+}
