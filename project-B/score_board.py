@@ -42,7 +42,10 @@ def win():
 
 
 while True:
-    b = radio.receive()
+    try:
+        b = radio.receive()
+    catch ValueError:
+        continue
     if b:
         b = b.split(":")
         if b[0] == "W" and b[1] == "1":
