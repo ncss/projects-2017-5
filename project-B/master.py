@@ -66,13 +66,16 @@ def update_screen():
     if ball[1] in display_range:
         display.set_pixel(ball[0],ball[1]-5, 9 )
       
-
+ 
 def end_game(winner):
+    sleep(10)
     if winner == '1':
         display.show(Image('90009:09990:00000:09090:09090'))
+        radio.send("W:2")
     elif winner == '0':
         display.show(Image('09990:90009:00000:09090:09090'))
-    
+        radio.send("W:1")
+            
     sleep(1000)
     while 1:
         if button_a.is_pressed() or button_b.is_pressed():
@@ -87,20 +90,15 @@ while 1:
        
     update_screen()
     radio.send("US:" + str(ball[0]) + ":" + str(ball[1]) + ":" + str(paddle_2))#add paddle
-    #print(4,ball)
     if ball[1] == 0:
         end_game('1')
     if ball[1] == 9:
-        end_game('0')
-    
+        end_game('0')    
     if button_a.was_pressed():
         paddle_1 = shift_paddle(paddle_1, -1)
         
     if button_b.was_pressed():
-        paddle_1 = shift_paddle(paddle_1, 1)
-    
-    
-    
+        paddle_1 = shift_paddle(paddle_1, 1) 
     b = radio.receive()
     if b:
         b = b.split(":")
