@@ -1,5 +1,6 @@
 from microbit import *
 import radio
+import music
 
 radio.on()
 radio.config(channel=13)
@@ -9,6 +10,7 @@ goal = 30
 while True:
     leg = 'right'
     count = 0
+    display.clear()
     while count < goal:
         display.scroll(str(count))
         message = radio.receive()
@@ -23,8 +25,9 @@ while True:
                 leg = 'left'
                 radio.send('LIGHT')
     radio.send('finished')
-        
-            
+    music.play(music.NYAN, wait=False)
+    display.scroll("Win!!")
+    
             
             
             
