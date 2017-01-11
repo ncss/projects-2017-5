@@ -66,12 +66,6 @@ class Display:
   def fill(self, color=0):
     self.fill_rectangle(0, 0, 128, 128, color)
 
-  def hline(self, x, y, w, color):
-    self.fill_rectangle(x, y, w, 1, color)
-
-  def vline(self, x, y, h, color):
-    self.fill_rectangle(x, y, 1, h, color)
-
   def reset(self):
     pin2.write_digital(0)
     sleep(50)
@@ -111,10 +105,16 @@ d = Display()
 
 while True:
     d.fill()
-    score = radio.receive()
+    #try:
+    #    score = radio.receive()
+    #except ValueError:
+    #    radio.receive_bytes()
+    #if score is None:
+    #    continue
+    sleep(2)
     digits = [int(d) for d in str(score)]
     d.display_number(digits[2], 85, 50, color565(255, 0, 0), 7)
     d.display_number(digits[1], 45, 50, color565(255, 0, 0), 7)
     d.display_number(digits[0], 5, 50, color565(255, 0, 0), 7)
-    sleep(1000)
+    sleep(500)
 

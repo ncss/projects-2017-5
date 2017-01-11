@@ -1,23 +1,23 @@
 from microbit import *
 import radio
 import random
-time = 2400
+time = 2000
 score = 0
 multiplier = 0
 combo = 0
 #https://www.youtube.com/watch?v=fBGSJ3sbivI
 radio.on()
-radio.config(channel=9)
+radio.config(channel=9, address=0x87654321)
+lose = 0
 
-
-def round(time, combo, multiplier,score):
+def round(time, combo, multiplier,cur):
     directions = {"right": Image.ARROW_E,
                   "for": Image.ARROW_N,
                   "back":Image.ARROW_S,
                   "left":Image.ARROW_W}
     direction  = ["right","left","for","back"]
     game_won = False
-    cur = random.choice(direction)
+    sleep(2)
     display.show(directions[cur])
     start =  running_time()
     end = running_time()
@@ -30,36 +30,51 @@ def round(time, combo, multiplier,score):
                 game_won = True
                 combo += 1
                 break
+            else:
+                game_won = False
+                combo = 0
+                break
         end = running_time()
     
     #if time > 400:
-     #   time = int(time* 0.95)
+    time = max(int(time* 0.95),650)
     if combo >= 3:
         multiplier += 1
         combo = 0
     if game_won:
-        score += multiplier 
+        round_won = True
     else:
         multiplier = 1
         combo = 0
-    return time,combo,multiplier,score
+        round_won = False
+    return time,combo,multiplier,round_won
     
 
 
 while True:
-    if button_a.was_pressed():
-        s_start,s_end = running_time(),running_time()
-        while s_end - s_start < 170000:
-            time,combo,multiplier,score = round(time,combo,multiplier,score)
-            display.clear()
-            print(score)
-            if button_b.was_pressed():
-                s_end = s_start + 200000
-        display.scroll(str(score),wait=True)
-        display.show(Image.HEART)
-        sleep(2000)
-        display.show(Image.MUSIC_CROTCHET)
-        s_end = running_time()
-    display.show(Image.MUSIC_QUAVER)
-            
+    radio.config(channel=9, address=0x87654321)
+    cur = radio.receive()
+    sleep(1)
+    score_start,score_end = running_time(),running_time()
+    while type(cur) is not str:
+        cur = radio.receive()
+        sleep(1)
+        score_end = running_time()
+        if score_end - score_start > 4000:
+            score = 0
+            time = 2000
+    radio.config(channel = 9 , address = 0x75626974)
+    time,combo,multiplier,round_won = round(time,combo,multiplier,cur)
+    if round_won:
+        radio.config(channel=9, address=0x87654321)
+        display.show(Image.HAPPY)
+        score += multiplier
+    else:
+        radio.config(channel=9, address=0x87654321)
+        display.show(Image.SAD)      
+        lose += 1
+    radio.config(channel=6,address=0x12341234)
+    radio.send(str("%03d" % score))
+
+        
     
