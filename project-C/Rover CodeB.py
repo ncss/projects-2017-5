@@ -8,7 +8,7 @@ REC = "REC:"
 MEM = "MEM:"
 ROV = "ROV:"
 
-speed = 1
+speed = 1.5
 
 def forward(time):
     pin16.write_digital(1)
@@ -78,4 +78,4 @@ while True:
                 forward(speed)
                 
             if msg.startswith("INCORRECT"):
-                reverse(speed)
+                reverse(2)
