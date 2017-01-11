@@ -25,6 +25,8 @@ state = STATE_START
 leg_hold_start = 0
 current_delay = 1000
 
+last_qwop_message = running_time()
+
 display.show(Image.SAD)
 
 while True:    
@@ -54,10 +56,12 @@ while True:
             display.show(Image.SAD)
             sleep(1000)
 
-    if pos == 'down' and is_leg_up():
+    if pos == 'down' and is_leg_up() and running_time() - last_qwop_message > 100:
         pos = 'up'
         radio.send('q')
+        last_qwop_message = running_time()
 
-    if pos == 'up' and is_leg_down():
+    if pos == 'up' and is_leg_down() and running_time() - last_qwop_message > 100:
         pos == 'down'
         radio.send('w')
+        last_qwop_message = running_time()
